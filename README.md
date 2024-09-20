@@ -26,7 +26,7 @@ El script realiza los siguientes pasos:
 6. **Impresión de un mensaje de éxito**:
    - Al finalizar, imprime un mensaje en la consola indicando que la instalación se ha completado con éxito.
 
-## Requisitos
+## Requisitos y Ejecutar el Script
 
 - **Permisos de administrador** (`sudo`).
 - **Descargar codigos fuente** :
