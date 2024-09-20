@@ -1,30 +1,30 @@
 #!/bin/sh
 #########################################
-# REQUISITES TO RUN THIS SCRIPT
+# REQUISITOS PARA EJECUTAR ESTE SCRIPT
 #########################################
-# 1) Have sudo permition and execution permision on this scipt.
-#     * In order to execute this script you may put on the terminal:
-#	+ $ chmod +x script_parallel.sh
-#	+ $ ./script_parallel.sh 
+# 1) Tener permisos de sudo y permisos de ejecución en este script.
+#     * Para ejecutar este script, puedes escribir en la terminal:
+#       + $ chmod +x script_parallel.sh
+#       + $ ./script_parallel.sh
 #
-# 2) Download Source codes: (Recomended by Xyce Developers)
-#     * https://xyce.sandia.gov/downloads/source-code/ (If needed Sign Up whit an email)
-#     * https://github.com/trilinos/Trilinos/releases/tag/trilinos-release-12-12-1/   ( Source code (tar.gz) )
-#     * Or you can use a repository created to cointain this two files with one of the the next links:
-#	+ HTTPS: https://github.com/IvoGC/downloads_needed_XYCE.git
-#	+ SSH:	 git@github.com:IvoGC/downloads_needed_XYCE.git 
-
-# 3) This install would create one directory on the $PWD called Xyce_PB containing:
-#     * Downloads 	Contains the .tar files
-#     * XyceLibs/Parallel (contains trilinos build for parallel build)
-#     * Trilinos12.12 (contains Trilinos 12.12 Version)
-#     * Xyce_configure (cointains the cofiguration to perfomr the parallel build)
-#     * Xyce_parallel_build (the path to the parallel build)
-#     * XyceInstall/Parallel (installation path of Parallel Xyce)
-
-# This is in case you have to redefine your home directory
+# 2) Descargar los códigos fuente: (Recomendado por los desarrolladores de Xyce)
+#     * https://xyce.sandia.gov/downloads/source-code/ (Si es necesario, regístrate con un email)
+#     * https://github.com/trilinos/Trilinos/releases/tag/trilinos-release-12-12-1/ (Código fuente (tar.gz))
+#     * O puedes usar un repositorio que contiene estos dos archivos en uno de los siguientes enlaces:
+#       + HTTPS: https://github.com/IvoGC/downloads_needed_XYCE.git
+#       + SSH: git@github.com:IvoGC/downloads_needed_XYCE.git
+#
+# 3) Esta instalación creará un directorio en el $PWD llamado Xyce_PB que contendrá:
+#     * Downloads: contiene los archivos .tar
+#     * XyceLibs/Parallel: contiene la compilación de Trilinos para la compilación en paralelo
+#     * Trilinos12.12: contiene la versión 12.12 de Trilinos
+#     * Xyce_configure: contiene la configuración para realizar la compilación en paralelo
+#     * Xyce_parallel_build: ruta hacia la compilación en paralelo
+#     * XyceInstall/Parallel: ruta de instalación de Xyce en paralelo
+#
+# Esto es en caso de que tengas que redefinir tu directorio home.
 #########################################
-# PREPARE THE REPOSITORY
+# PREPARAR EL DIRECTORIO
 #########################################
 mkdir $PWD/Xyce_PB
 
@@ -35,7 +35,7 @@ mkdir $INSTALL_DIR/XyceLibs
 mkdir $INSTALL_DIR/XyceLibs/Parallel
 
 #########################################
-# DOWNLOAD COMPRESED FILES
+# DESCARGAR ARCHIVOS COMPRIMIDOS
 #########################################
 
 sudo apt-get install git-lfs
@@ -45,32 +45,34 @@ git lfs install
 cd $INSTALL_DIR
 
 #########################################
-# INSTALL PREREQUISITE LIBRARIES
+# INSTALAR BIBLIOTECAS REQUERIDAS
 #########################################
+
 sudo apt-get install gcc g++ gfortran make cmake bison flex libfl-dev libfftw3-dev libsuitesparse-dev libblas-dev liblapack-dev libtool 
-# IF extracted from github repositories you need to execute these lines
-#sudo apt-get install autoconf automake git 
-# if builind parallel version of Xyce 
+# Si se extraen desde repositorios de GitHub, debes ejecutar estas líneas:
+# sudo apt-get install autoconf automake git
+# Si estás compilando la versión paralela de Xyce
 sudo apt-get install libopenmpi-dev openmpi-bin
 
 #########################################
-# INSTALL TRILINOS-12-12-1
+# INSTALAR TRILINOS-12-12-1
 #########################################
 
-# Xyce is not guaranteed to build properly with other versions of Trilinos.
+#  Segun el Fabricangte no se garantiza que Xyce se compile correctamente con otras versiones de Trilinos.
 
-# DOWNLOAD SOURCE CODE FROM: https://github.com/trilinos/Trilinos/releases/tag/trilinos-release-12-12-1/
+#  SE PUEDE DESCARGAR CÓDIGO FUENTE DESDE: https://github.com/trilinos/Trilinos/releases/tag/trilinos-release-12-12-1/
 
 mkdir $INSTALL_DIR/Trilinos12.12
 cd $INSTALL_DIR/Trilinos12.12
-# Change the trilininos.tar path to unpack this compresed file
+# Cambia la ruta del archivo trilinos.tar para descomprimir este archivo
 tar xzf $INSTALL_DIR/Downloads/Trilinos-trilinos-release-12-12-1.tar.gz
 
+
 #########################################
-# BUILDING TRILINOS FOR XYCE PARALLEL
+# COMPILAR TRILINOS PARA XYCE EN PARALELO
 #########################################
 
-# Invoke CMake specifying all the required parameters
+# Invocar CMake especificando todos los parámetros necesarios
 
 SRCDIR=$INSTALL_DIR/Trilinos12.12/Trilinos-trilinos-release-12-12-1
 ARCHDIR=$INSTALL_DIR/XyceLibs/Parallel
@@ -116,33 +118,34 @@ cmake \
 -DTPL_ENABLE_LAPACK=ON \
 -DTPL_ENABLE_MPI=ON \
 $SRCDIR
-# INSTALL THE TRILINOS FOR PARALLEL XYCE
 
+# INSTALAR TRILINOS PARA XYCE EN PARALELO
 make
 make install
 cd $INSTALL_DIR
 
 #########################################
-# DOWNLOAD & UNPACK Xyce SOURCE CODE
+# DESCARGAR Y DESCOMPRIMIR CÓDIGO FUENTE DE XYCE
 #########################################
 
-# Downloading from the web site is the RECOMENDED DOWNLOAD METHOD
-# https://xyce.sandia.gov/downloads/source-code/ (CHECK THE  VERSION )
+# La descarga desde el sitio web es el MÉTODO DE DESCARGA RECOMENDADO
+# https://xyce.sandia.gov/downloads/source-code/ (VERIFICAR LA VERSIÓN En caso de no haberlo descargado desde el repositorio)  
 
 mkdir $INSTALL_DIR/Xyce_configure
 cd $INSTALL_DIR/Xyce_configure
 tar xzf $INSTALL_DIR/Downloads/Xyce-7.8.tar.gz
 cd $INSTALL_DIR
 
-# NOTE: unsing another version change Xyce-7.8 to Xyce-x.x to new version
+# NOTA: usando otra versión, cambia Xyce-7.8 a Xyce-x.x para la nueva versión.
 
 #########################################
-# BUILD Xyce Parallel
+# COMPILAR XYCE PARALELO
 #########################################
 
 mkdir $INSTALL_DIR/Xyce_parallel_build
 cd $INSTALL_DIR/Xyce_parallel_build
-# Invoke CMake specifying all the required parameters
+
+# Invocar CMake especificando todos los parámetros necesarios
 $INSTALL_DIR/Xyce_configure/Xyce-7.8/configure \
 CXXFLAGS="-O3" \
 ARCHDIR="$INSTALL_DIR/XyceLibs/Parallel" \
@@ -155,10 +158,12 @@ F77=mpif77 \
 --enable-amesos2 \
 --prefix=$INSTALL_DIR/XyceInstall/Parallel
 
-# INSTALL PARALLEL XYCE
+# INSTALAR XYCE EN PARALELO
 make
 sudo make install
 cd $INSTALL_DIR/..
+
+echo "El script se ha ejecutado con éxito."
 
 
 
