@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Este script automatiza el proceso de instalación de **Xyce**, un simulador de circuitos de alto rendimiento desarrollado por Sandia National Laboratories, configurado para una instalación en modo paralelo. Se utiliza para realizar simulaciones de circuitos eléctricos y electrónicos de gran escala en múltiples núcleos o nodos de un clúster de computación. Además, el script instala las bibliotecas y dependencias necesarias para compilar **Trilinos** (la biblioteca de soporte de Xyce) y luego compilar **Xyce** con soporte para **MPI** (Message Passing Interface).
+Este repositorio cuenta con un script automatiza el proceso de instalación de **Xyce**, un simulador de circuitos de alto rendimiento desarrollado por Sandia National Laboratories, configurado para una instalación en modo paralelo. Se utiliza para realizar simulaciones de circuitos eléctricos y electrónicos de gran escala en múltiples núcleos o nodos de un clúster de computación. Además, el script instala las bibliotecas y dependencias necesarias para compilar **Trilinos** (la biblioteca de soporte de Xyce) y luego compilar **Xyce** con soporte para **MPI** (Message Passing Interface).
 
 ## Funcionalidad del Script
 
@@ -29,6 +29,8 @@ El script realiza los siguientes pasos:
 ## Requisitos
 
 - **Permisos de administrador** (`sudo`).
+- **Descargar codigos fuente** :
+  Se debe contar con los codigos fuente decargados manualmente o dejar que el script los instale automaticamente.
 - **Permisos de ejecución** del script:
   ```bash
   chmod +x script_parallel.sh
