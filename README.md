@@ -34,3 +34,6 @@ El script realiza los siguientes pasos:
 - **Permisos de ejecución** del script:
   ```bash
   chmod +x script_parallel.sh
+- **Ejecutar el script**:
+  ```bash
+   ./script_parallel.sh
